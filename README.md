@@ -1,2 +1,3 @@
 # holodle
-A wordle-like game for hololive.
+A wordle-like game for hololive!
+6
