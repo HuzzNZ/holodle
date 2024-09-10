@@ -1,19 +1,20 @@
 "use client"
 
-import Input from "@/components/dropdown/input"
+import Input from "@/components/TalentInput"
 import { useState } from "react"
-import { Talent } from "@/components/dropdown/option"
+import { Nullable } from "@/lib/types/util"
+import { Talent } from "@/lib/types/data"
 
 export default function Page() {
-    const [selectedTalent, setSelectedTalent] = useState<Talent | null>(null)
+    const [selectedTalent, setSelectedTalent] = useState<Nullable<Talent>>(null)
+
     return (
-        <div className={"w-full flex items-center justify-center py-24"}>
-            <div className={"flex flex-col items-center gap-8 justify-center"}>
-                <Input selectedTalent={selectedTalent} setSelectedTalent={setSelectedTalent}/>
-                <div className={"flex flex-row gap-8"}>
-                    <Button text={"Guess!"} theme={"blue"} disabled={selectedTalent === null}/>
-                    <Button text={"Pass"} theme={"gray"}/>
-                </div>
+        <div className={"w-full flex flex-col items-center justify-center py-24 gap-y-8"}>
+            <h1 className={"text-[48px] font-semibold"}>holodle</h1>
+            <Input selectedTalent={selectedTalent} setSelectedTalent={setSelectedTalent}/>
+            <div className={"flex flex-row gap-8"}>
+                <Button text={"Guess!"} theme={"blue"} disabled={selectedTalent === null}/>
+                <Button text={"Pass"} theme={"gray"}/>
             </div>
         </div>
     )
@@ -42,8 +43,11 @@ function Button({ theme = "blue", disabled = false, onClick, text }: ButtonProps
             disabled={disabled}
             onClick={onClick}
             className={`
-                w-28 h-10 rounded-md text-white font-medium
-                ${disabled? "cursor-not-allowed" : "hover:drop-shadow-xl drop-shadow-md"} transition-all ${themeClass}
+                w-28 h-10 rounded-md
+                text-white font-medium
+                transition-all
+                ${disabled? "cursor-not-allowed" : "hover:drop-shadow-xl drop-shadow-md"}
+                ${themeClass}
             `}
         >
             {text}
