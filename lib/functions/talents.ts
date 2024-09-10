@@ -23,3 +23,7 @@ export function searchTalents(searchString: string): Talent[] {
 export function allTalents(): Talent[] {
     return talents.map(t => t)
 }
+
+export function randomTalent(): Talent {
+    return talents[Math.floor(talents.length * Math.random())]
+}

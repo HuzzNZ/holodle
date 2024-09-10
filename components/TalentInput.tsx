@@ -5,18 +5,17 @@ import React, { ChangeEvent, KeyboardEvent, SetStateAction, useState } from "rea
 import TalentOption from "@/components/TalentOption"
 import { Talent } from "@/lib/types/data"
 import { Nullable } from "@/lib/types/util"
-import { allTalents, matchTalent, searchTalents } from "@/lib/tools/talents";
+import { allTalents, matchTalent, searchTalents } from "@/lib/functions/talents";
 
 type InputProps = {
     selectedTalent: Nullable<Talent>
     setSelectedTalent: React.Dispatch<SetStateAction<Nullable<Talent>>>
 }
 
-export default function TalentInput({ selectedTalent, setSelectedTalent }: InputProps): React.JSX.Element {
+export default function TalentInput({ selectedTalent, setSelectedTalent, id }: InputProps): React.JSX.Element {
     const [dropdownHidden, setDropdownHidden] = useState(true)
     const [dropdownTalentsList, setDropdownTalentsList] = useState<Talent[]>(allTalents())
     const [dropdownHighlightPos, setDropdownHighlightPos] = useState(-1)
-    const talentInputId = "talentInput"
     const talentOptionId = "talentOption"
 
     const hideDropdown = () => {
@@ -68,11 +67,16 @@ export default function TalentInput({ selectedTalent, setSelectedTalent }: Input
                     return p - 1
                 } return p
             })
+        } else if (e.key === "Enter") {
+            if (!dropdownHidden) {
+                onDropdownSelect(dropdownTalentsList[dropdownHighlightPos])
+                hideDropdown()
+            }
         }
     }
 
     const onDropdownSelect = (t: Talent) => {
-        const i = document.getElementById(talentInputId) as HTMLInputElement
+        const i = document.getElementById(id) as HTMLInputElement
         i.value = t.fullName
         setSelectedTalent(t)
     }
@@ -87,7 +91,7 @@ export default function TalentInput({ selectedTalent, setSelectedTalent }: Input
             `}>
                 <input
                     type={"text"}
-                    id={talentInputId}
+                    id={id}
                     maxLength={35}
                     spellCheck={false}
                     autoComplete={"off"}
