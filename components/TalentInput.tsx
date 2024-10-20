@@ -1,5 +1,3 @@
-"use client"
-
 import Image from "next/image"
 import React, { ChangeEvent, KeyboardEvent, SetStateAction, useState } from "react"
 import TalentOption from "@/components/TalentOption"
@@ -10,6 +8,7 @@ import { allTalents, matchTalent, searchTalents } from "@/lib/functions/talents"
 type InputProps = {
     selectedTalent: Nullable<Talent>
     setSelectedTalent: React.Dispatch<SetStateAction<Nullable<Talent>>>
+    id: string
 }
 
 export default function TalentInput({ selectedTalent, setSelectedTalent, id }: InputProps): React.JSX.Element {
@@ -50,6 +49,7 @@ export default function TalentInput({ selectedTalent, setSelectedTalent, id }: I
         if (e.key === "ArrowDown") {
             setDropdownHighlightPos(p => {
                 if (p < dropdownTalentsList.length - 1) {
+                    // @ts-ignore
                     document.getElementById(`${talentOptionId}-${p + 1}`).scrollIntoView({
                         behavior: "smooth",
                         block: "end"
@@ -60,6 +60,7 @@ export default function TalentInput({ selectedTalent, setSelectedTalent, id }: I
         } else if (e.key === "ArrowUp") {
             setDropdownHighlightPos(p => {
                 if (p > 0) {
+                    // @ts-ignore
                     document.getElementById(`${talentOptionId}-${p - 1}`).scrollIntoView({
                         behavior: "smooth",
                         block: "end"
